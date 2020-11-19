@@ -37,3 +37,8 @@ stages:
           dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
           tags: |
             $(tag)
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'deploy'
+          kubernetesServiceConnection: 'fdsfagner-aks-fdsfagner-fdsfagner-1605821935388'
+          namespace: 'fdsfagner'      
