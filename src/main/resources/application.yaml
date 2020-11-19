@@ -1,0 +1,10 @@
+spring:
+application:
+  name: ${APPLICATION_NAME:challenge}
+datasource:
+  driverClassName: org.h2.Driver
+  url: ${DATASOURCE_URL:jdbc:h2:mem:testdb}
+  username: ${DATASOURCE_USERNAME:sa}
+  password:
+jpa:
+  database-platform: ${DATABASE_PLATFORM:org.hibernate.dialect.H2Dialect}
