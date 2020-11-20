@@ -31,23 +31,12 @@ stages:
           effectivePomSkip: false
           sonarQubeRunAnalysis: false
       - task: Docker@2
-        displayName: Build an image
+        displayName: Build an image and push
         inputs:
-          command: build
+          containerRegistry: 'docker_fdsfagner'
+          repository: 'fdsfagner'
+          command: buildAndPush
           dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
           tags: |
-            $(tag)
-      - task: Docker@2
-        displayName: Push image
-        inputs:
-          containerRegistry: |
-            $(dockerHub)
-          repository: $(imageName)
-          command: push
-          tags: |
-            $(tag)     
-      - task: KubernetesManifest@0
-        inputs:
-          action: 'deploy'
-          kubernetesServiceConnection: 'fdsfagner-aks-fdsfagner-fdsfagner-1605821935388'
-          namespace: 'fdsfagner'      
+            $(tag) 
+     
