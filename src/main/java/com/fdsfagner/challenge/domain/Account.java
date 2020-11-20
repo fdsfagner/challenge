@@ -14,4 +14,12 @@ public class Account implements Serializable {
 
     private long id;
     private BigDecimal balance;
+
+    public void deposit(BigDecimal amount) {
+        this.balance = this.balance.add(amount);
+    }
+
+    public void withdraw(BigDecimal amount) {
+        this.balance = this.balance.subtract(amount);
+    }
 }

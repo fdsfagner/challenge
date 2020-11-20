@@ -40,7 +40,10 @@ public class TransactionAdapterOut implements TransactionPortOut {
             destinationtEntity = destinationOptional.get();
         }
 
-        destinationtEntity.setBalance(destinationtEntity.getBalance().add(amount));
+        destination.setBalance(destination.getBalance());
+        destination.deposit(amount);
+
+        destinationtEntity.setBalance(destination.getBalance());
         accountRepository.saveAndFlush(destinationtEntity);
 
         transactionEntity.setDestination(destinationtEntity);
@@ -66,7 +69,10 @@ public class TransactionAdapterOut implements TransactionPortOut {
             originEntity = originOptional.get();
         }
 
-        originEntity.setBalance(originEntity.getBalance().subtract(amount));
+        origin.setBalance(originEntity.getBalance());
+        origin.withdraw(amount);
+
+        originEntity.setBalance(origin.getBalance());
         accountRepository.saveAndFlush(originEntity);
 
         transactionEntity.setOrigin(originEntity);
@@ -93,6 +99,8 @@ public class TransactionAdapterOut implements TransactionPortOut {
             destinationtEntity = destinationOptional.get();
         }
 
+        destination.setBalance(destinationtEntity.getBalance());
+
         Optional<AccountEntity> originOptional = accountRepository.findById(origin.getId());
 
         if (!originOptional.isPresent()) {
@@ -100,11 +108,14 @@ public class TransactionAdapterOut implements TransactionPortOut {
         }
 
         AccountEntity originEntity = originOptional.get();
+        origin.setBalance(originEntity.getBalance());
+        origin.withdraw(amount);
 
-        originEntity.setBalance(originEntity.getBalance().subtract(amount));
+        originEntity.setBalance(origin.getBalance());
         accountRepository.saveAndFlush(originEntity);
 
-        destinationtEntity.setBalance(destinationtEntity.getBalance().add(amount));
+        destination.deposit(amount);
+        destinationtEntity.setBalance(destination.getBalance());
         accountRepository.saveAndFlush(destinationtEntity);
 
         transactionEntity.setOrigin(originEntity);

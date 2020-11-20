@@ -10,6 +10,7 @@ import com.fdsfagner.challenge.domain.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,13 +38,22 @@ public class TransactionAdapter {
         AccountDto originDto = new AccountDto();
         originDto.setId(event.getOrigin());
 
-        Account destination = accountQuery.getAccountById(event.getDestination());
-        Account origin = accountQuery.getAccountById(event.getOrigin());
+        Account destination = null;
 
-        if (destination == null) {
+        if (!ObjectUtils.isEmpty(event.getDestination())) {
+            destination = accountQuery.getAccountById(Long.valueOf(event.getDestination()));
+        }
+
+        if (destination == null && !ObjectUtils.isEmpty(event.getDestination())) {
             destination = new Account();
-            destination.setId(event.getDestination());
+            destination.setId(Long.valueOf(event.getDestination()));
             destination.setBalance(BigDecimal.ZERO);
+        }
+
+        Account origin = null;
+
+        if (!ObjectUtils.isEmpty(event.getOrigin())) {
+            origin = accountQuery.getAccountById(Long.valueOf(event.getOrigin()));
         }
 
         Transaction transaction;
@@ -54,8 +64,6 @@ public class TransactionAdapter {
             dto.setDestination(destinationDto);
             dto.getDestination().setBalance(transaction.getDestination().getBalance());
         } else if (origin != null) {
-            origin = accountQuery.getAccountById(event.getOrigin());
-
             if (event.getType().equalsIgnoreCase(Transaction.Type.Withdraw.name())) {
                 transaction = transationQuery.withdraw(origin, event.getAmount());
 

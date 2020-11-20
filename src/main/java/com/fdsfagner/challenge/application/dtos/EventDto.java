@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class EventDto {
 
     private String type;
-    private long origin;
-    private long destination;
+    private String origin;
+    private String destination;
     private BigDecimal amount;
 }
