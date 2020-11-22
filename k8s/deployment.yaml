@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: load-balancer-challenge
+  name: challenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: load-balancer-challenge
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: load-balancer-challenge
+    spec:
+      containers:
+        - name: challenge
+          image:  fdsfagner/challenge:latest
+          ports:
+            - containerPort: 8080
