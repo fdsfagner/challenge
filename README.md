@@ -1,30 +1,42 @@
 ## Challenge Application
 
-### Configurações | Build | Deploy
+### Configuration | Build | Deploy
 
-#### Pre Requisitos
+#### Pre Requirements
 - [Java_8](https://www.oracle.com/java/)
 - [Maven 3.6.3](https://maven.apache.org/download.cgi)
 
-#### Repositórios 
+#### Repositories 
 - [GitHub](https://github.com/fdsfagner/challenge)
 - [DockerHub](https://hub.docker.com/repository/docker/fdsfagner/challenge)
 
-### Desenvolvimento local
-Após clonar o repositório, executar o seguinte comando na pasta raiz do projeto:
+### Local Development
+
+After cloning the repository, run the following command in the project's root folder:
 
 ```
 mvn clean spring-boot:run
 ```
 
+### Docker
+
+After cloning the repository, run the following command in the project's root folder:
 ```
-curl localhost:8080
+mvn clean install
+```
+
+```
+docker build -t {name of image} .
+```
+
+```
+docker run -p 8080:8080 {name of image} .
 ```
 
 ### Testes
 - [Postman](https://www.postman.com/)
 
-Importar o arquivo **Challenge.postman_collection.json** na pasta raiz do projeto/test.
+Import file **Challenge.postman_collection.json** in the project's root folder/test.
 
 #### Reset state before starting tests
 ```
