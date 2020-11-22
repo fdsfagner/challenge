@@ -1,24 +1,52 @@
 ## Challenge Application
 
+### Configurações | Build | Deploy
+
+#### Pre Requisitos
+- [Java_8](https://www.oracle.com/java/)
+- [Maven 3.6.3](https://maven.apache.org/download.cgi)
+
+#### Repositórios 
+- [GitHub](https://github.com/fdsfagner/challenge)
+- [DockerHub](https://hub.docker.com/repository/docker/fdsfagner/challenge)
+
+### Desenvolvimento local
+Após clonar o repositório, executar o seguinte comando na pasta raiz do projeto:
+
+```
+mvn clean spring-boot:run
+```
+
+```
+curl localhost:8080
+```
+
+### Testes
+- [Postman](https://www.postman.com/)
+
+Importar o arquivo **Challenge.postman_collection.json** na pasta raiz do projeto/test.
+
 #### Reset state before starting tests
-
+```
 POST /reset
+```
 
-HTTP Status: 200 
-
-Result: OK
+- HTTP Status: 200 
+- Result: OK
 
 #### Get balance for non-existing account
 
+```
 GET /balance?account_id=1234
-
-HTTP Status: 404 
-
-Result: 0
+```
+- HTTP Status: 404 
+- Result: 0
 
 #### Create account with initial balance
-
-POST /event 
+```
+POST /event
+```
+ 
 ```json
 {
    "type":"deposit",
@@ -26,10 +54,8 @@ POST /event
    "amount":10
 }
 ```
-
-HTTP Status: 201
-
-Result:
+- HTTP Status: 201
+- Result:
 ```json 
 {
    "destination":{
@@ -41,7 +67,9 @@ Result:
 
 #### Deposit into existing account
 
-POST /event 
+```
+POST /event
+``` 
 
 ```json
 {
@@ -50,10 +78,8 @@ POST /event
    "amount":10
 }
 ```
-
-HTTP Status: 201
-
-Result: 
+- HTTP Status: 201
+- Result: 
 ```json
 {
    "destination":{
@@ -65,15 +91,17 @@ Result:
 
 #### Get balance for existing account
 
+```
 GET /balance?account_id=100
-
-HTTP Status: 200
- 
-Result: 20
+```
+- HTTP Status: 200
+- Result: 20
 
 #### Withdraw from non-existing account
 
+```
 POST /event 
+```
 
 ```json
 {
@@ -82,13 +110,15 @@ POST /event
    "amount":10
 }
 ```
-HTTP Status: 404 
-
-Result: 0
+- HTTP Status: 404 
+- Result: 0
 
 #### Withdraw from existing account
 
-POST /event 
+```
+POST /event
+```
+ 
 ```json
 {
    "type":"withdraw",
@@ -96,10 +126,8 @@ POST /event
    "amount":5
 }
 ```
-
-HTTP Status: 201
-
-Result:
+- HTTP Status: 201
+- Result:
 ```json
 {
    "origin":{
@@ -111,7 +139,10 @@ Result:
 
 #### Transfer from existing account
 
-POST /event 
+```
+POST /event
+```
+ 
 ```json
 {
    "type":"transfer",
@@ -120,10 +151,8 @@ POST /event
    "destination":"300"
 }
 ```
-
-HTTP Status: 201
-
-Result:
+- HTTP Status: 201
+- Result:
 ```json
 {
    "origin":{
@@ -139,7 +168,10 @@ Result:
 
 #### Transfer from non-existing account
 
-POST /event 
+```
+POST /event
+```
+ 
 ```json
 {
    "type":"transfer",
@@ -148,10 +180,8 @@ POST /event
    "destination":"300"
 }
 ```
-
-HTTP Status: 404
-
-Result: 0
+- HTTP Status: 404
+- Result: 0
 
 ## Hexagonal Architecture
 
