@@ -19,7 +19,15 @@ public class Account implements Serializable {
         this.balance = this.balance.add(amount);
     }
 
-    public void withdraw(BigDecimal amount) {
-        this.balance = this.balance.subtract(amount);
+    public boolean withdraw(BigDecimal amount) {
+
+        BigDecimal results =  this.balance.subtract(amount);
+
+        if (results.longValue() >= 0) {
+            this.balance = this.balance.subtract(amount);
+            return true;
+        }
+
+        return false;
     }
 }

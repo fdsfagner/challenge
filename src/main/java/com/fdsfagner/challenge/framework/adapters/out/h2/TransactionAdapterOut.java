@@ -70,7 +70,11 @@ public class TransactionAdapterOut implements TransactionPortOut {
         }
 
         origin.setBalance(originEntity.getBalance());
-        origin.withdraw(amount);
+        boolean result = origin.withdraw(amount);
+
+        if (!result){
+            return null;
+        }
 
         originEntity.setBalance(origin.getBalance());
         accountRepository.saveAndFlush(originEntity);
@@ -109,7 +113,11 @@ public class TransactionAdapterOut implements TransactionPortOut {
 
         AccountEntity originEntity = originOptional.get();
         origin.setBalance(originEntity.getBalance());
-        origin.withdraw(amount);
+        boolean result = origin.withdraw(amount);
+
+        if (!result) {
+            return null;
+        }
 
         originEntity.setBalance(origin.getBalance());
         accountRepository.saveAndFlush(originEntity);

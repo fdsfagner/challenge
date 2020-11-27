@@ -67,10 +67,18 @@ public class TransactionAdapter {
             if (event.getType().equalsIgnoreCase(Transaction.Type.Withdraw.name())) {
                 transaction = transationQuery.withdraw(origin, event.getAmount());
 
+                if (transaction == null) {
+                    return new ResponseEntity<String>("0", HttpStatus.NOT_FOUND);
+                }
+
                 dto.setOrigin(originDto);
                 dto.getOrigin().setBalance(transaction.getOrigin().getBalance());
             } else if (event.getType().equalsIgnoreCase(Transaction.Type.Transfer.name())) {
                 transaction = transationQuery.transfer(origin, destination, event.getAmount());
+
+                if (transaction == null) {
+                    return new ResponseEntity<String>("0", HttpStatus.NOT_FOUND);
+                }
 
                 dto.setOrigin(originDto);
                 dto.setDestination(destinationDto);
