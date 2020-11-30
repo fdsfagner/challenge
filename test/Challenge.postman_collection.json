@@ -199,6 +199,24 @@
 		},
 		{
 			"name": "Withdraw from non-existing account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aa022488-ca95-42a3-bb5c-211f615f454f",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"0\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -288,7 +306,82 @@
 			"response": []
 		},
 		{
+			"name": "Withdraw from existing account and non-existing balance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8a40af4-568b-4fed-8ecd-3c1a720a45ab",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json;",
+							"    ",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"type\":\"withdraw\",\r\n   \"origin\":\"100\",\r\n   \"amount\":20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/event",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Transfer from existing account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f15dd75-0150-46df-ac1f-ccdfa89b2c08",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json;",
+							"    ",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -324,6 +417,24 @@
 		},
 		{
 			"name": "Transfer from non-existing account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4180ffba-3769-454b-b15d-409e42eebc39",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"0\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
